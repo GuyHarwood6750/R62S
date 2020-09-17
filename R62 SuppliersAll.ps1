@@ -1,13 +1,13 @@
 ﻿<#      Extract from EXPENSES spreadsheet the range for new invoices to be generated.
         Modify the $StartR (startrow) and $endR (endrow). 
 #>
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers august 2020.xlsm'          #Source workbook
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers september 2020.xlsm'          #Source workbook
 $csvfile = 'suppliers_1.csv'                                                                                    #Temp file
 $pathout = 'C:\userdata\route 62\_all suppliers\'
-$custsheet = 'august 2020'                                                                        #Month worksheet - changes each month
-$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers august 2020_1.csv'                  #Change each month
+$custsheet = 'september 2020'                                                                        #Month worksheet - changes each month
+$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers september 2020_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 59                                              #End Row - changes each month depending on number of invoices
+$endR = 94                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 $filter = "CSH"                                          #Filter - Not CASH VOUCHERS - SER Where-Object BELOW
@@ -40,7 +40,7 @@ Remove-Item -Path $outfile
 #Temp file      
 $outfile = 'C:\userdata\route 62\_all suppliers\supplierinv.txt'
 #File to be imported into Pastel        
-$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers august 2020.txt'     
+$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers september 2020.txt'     
 
 #Remove last file imported to Pastel
 $checkfile = Test-Path $outfileF
@@ -87,6 +87,7 @@ foreach ($aObj in $data) {
         RENOKI { $expacc = '3250000'; $description = $aObj.descr }
         TELK00 { $expacc = '4600000'; $description = $aObj.descr }
         SAMRO { $expacc = '4550000'; $description = $aObj.descr }
+        SAPPHI { $expacc = '4500000'; $description = $aObj.descr }
         STCOMP { $expacc = '3300000'; $description = $aObj.descr }
         SWDMUN { $expacc = '3650000'; $description = $aObj.descr }
         WAF00 { $expacc = '4600000'; $description = $aObj.descr }

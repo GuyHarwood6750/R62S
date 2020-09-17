@@ -3,13 +3,13 @@
         This can only be done by eyeball as spreadsheet has historical data.
 #>
 
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers august 2020.xlsm'
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers september 2020.xlsm'
 $csvfile = 'suppliers cash payment.csv'
 $pathout = 'C:\userdata\route 62\_all suppliers\'
-$custsheet = 'august 2020'                          #Customer worksheet
-$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers paid cash august 2020.csv'
+$custsheet = 'september 2020'                          #Customer worksheet
+$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers paid cash september 2020.csv'
 $startR = 5                                    #Start row
-$endR = 59                                    #End Row
+$endR = 94                                    #End Row
 $startCol = 1                                    #Start Col (don't change)
 $endCol = 11                                      #End Col (don't change)
 $filter = "CSH"
