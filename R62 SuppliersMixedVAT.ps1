@@ -10,7 +10,7 @@ $custsheet = 'september mixed vat'                          #Customer worksheet
 $csvfile = 'suppliers mixed vat temp.csv'
 $pathout = 'C:\userdata\route 62\_all suppliers\'
 $startR = 5                                    #Start row
-$endR = 13                                    #End Row
+$endR = 15                                    #End Row
 $startCol = 1                                    #Start Col (don't change)
 $endCol = 15                                      #End Col (don't change)
 
