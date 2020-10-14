@@ -3,14 +3,14 @@
     
     **************  Used for MIXED VAT invoices  ******************
     #>
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers september 2020.xlsm'
-$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers mixed vat inv september 2020_1.csv'
-$outfileF = 'C:\userdata\route 62\_All Suppliers\Suppliers september mixed vat 2020_1.txt'     
-$custsheet = 'september mixed vat'                          #Customer worksheet
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers october 2020.xlsm'
+$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers mixed vat inv october 2020_1.csv'
+$outfileF = 'C:\userdata\route 62\_All Suppliers\Suppliers october mixed vat 2020_1.txt'     
+$custsheet = 'october mixed vat'                          #Customer worksheet
 $csvfile = 'suppliers mixed vat temp.csv'
 $pathout = 'C:\userdata\route 62\_all suppliers\'
 $startR = 5                                    #Start row
-$endR = 15                                    #End Row
+$endR = 6                                    #End Row
 $startCol = 1                                    #Start Col (don't change)
 $endCol = 15                                      #End Col (don't change)
 
