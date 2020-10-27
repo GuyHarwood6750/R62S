@@ -10,7 +10,7 @@ $startR = 5                                             #Start row - does not ch
 $endR = 111                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
-$filter = "CSH"                                          #Filter - Not CASH VOUCHERS - SER Where-Object BELOW
+$filter = "CSH"                                          #Filter - Not CASH VOUCHERS - SEE Where-Object BELOW
 $Outfile = $pathout + $csvfile
 
 Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P2 -ne $filter -and $_.P2 -ne 'CC' -and $_.P11 -ne 'done'} | Export-Csv -Path $Outfile -NoTypeInformation
