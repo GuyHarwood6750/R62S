@@ -80,7 +80,6 @@ foreach ($aObj in $data) {
         GRIDH { $expacc = '4600000'; $description = $aObj.descr }
         METRA { $expacc = '4350000'; $description = $aObj.descr }
         MOOVR { $expacc = '4300000'; $description = $aObj.descr }
-        MOOVG { $expacc = '2100111'; $description = $aObj.descr }
         MIOSA { $expacc = '4550000'; $description = $aObj.descr }
         MSCHER { $expacc = '3000000'; $description = $aObj.descr }
         PCOMP { $expacc = '4200000'; $description = $aObj.descr }

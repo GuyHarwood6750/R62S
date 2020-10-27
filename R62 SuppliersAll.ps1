@@ -7,7 +7,7 @@ $pathout = 'C:\userdata\route 62\_all suppliers\'
 $custsheet = 'october 2020'                                                                        #Month worksheet - changes each month
 $outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers october 2020_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 110                                              #End Row - changes each month depending on number of invoices
+$endR = 111                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 $filter = "CSH"                                          #Filter - Not CASH VOUCHERS - SER Where-Object BELOW
@@ -80,7 +80,11 @@ foreach ($aObj in $data) {
         GRIDH { $expacc = '4600000'; $description = $aObj.descr }
         METRA { $expacc = '4350000'; $description = $aObj.descr }
         MOOVR { $expacc = '4300000'; $description = $aObj.descr }
-        #MOOVG { $expacc = '2100111'; $description = $aObj.descr }
+        MOOVG { Switch ($aObj.descr) {
+                    Oil{ $expacc = '2100110'; $description = $aObj.descr }
+                    Gas{ $expacc = '2100111'; $description = $aObj.descr }
+                        }
+                }
         MIOSA { $expacc = '4550000'; $description = $aObj.descr }
         MSCHER { $expacc = '3000000'; $description = $aObj.descr }
         PCOMP { $expacc = '4200000'; $description = $aObj.descr }
