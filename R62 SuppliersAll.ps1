@@ -7,13 +7,13 @@ $pathout = 'C:\userdata\route 62\_all suppliers\'
 $custsheet = 'october 2020'                                                                        #Month worksheet - changes each month
 $outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers october 2020_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 111                                              #End Row - changes each month depending on number of invoices
+$endR = 169                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 $filter = "CSH"                                          #Filter - Not CASH VOUCHERS - SEE Where-Object BELOW
 $Outfile = $pathout + $csvfile
 
-Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P2 -ne $filter -and $_.P2 -ne 'CC' -and $_.P11 -ne 'done'} | Export-Csv -Path $Outfile -NoTypeInformation
+Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P2 -ne $filter -and $_.P2 -ne 'CC' -and $_.P10 -ne 'CN' -and $_.P11 -ne 'done' } | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
 Get-ChildItem -Path $pathout -Name $csvfile
@@ -92,6 +92,7 @@ foreach ($aObj in $data) {
         TELK00 { $expacc = '4600000'; $description = $aObj.descr }
         SAMRO { $expacc = '4550000'; $description = $aObj.descr }
         SAPPHI { $expacc = '4500000'; $description = $aObj.descr }
+        STAN { $expacc = '4150002'; $description = $aObj.descr }
         STCOMP { $expacc = '3300000'; $description = $aObj.descr }
         SWDMUN { $expacc = '3650000'; $description = $aObj.descr }
         WAF00 { $expacc = '4600000'; $description = $aObj.descr }

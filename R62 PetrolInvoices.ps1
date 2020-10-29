@@ -2,9 +2,9 @@
     Output to text file to be imported as a Pastel Invoice batch.
 
 #>
-$csvclient = 'C:\userdata\route 62\petrol books\wwb55.csv'      #Input from Client spreadsheet
+$csvclient = 'C:\userdata\route 62\petrol books\all2910.csv'      #Input from Client spreadsheet
 $outfile = 'C:\userdata\route 62\petrol books\petrolinv.txt'        #Temp file
-$outfile2 = 'C:\userdata\route 62\petrol books\wwb55.txt'     #File to be imported into Pastel
+$outfile2 = 'C:\userdata\route 62\petrol books\all2910.txt'     #File to be imported into Pastel
 
 #Remove last file imported to Pastel
 
@@ -41,7 +41,7 @@ foreach ($aObj in $data) {
         f13   = ''
         f14   = ''
         f15   = '0'
-        f16   = '30/04/2019'
+        f16   = $aObj.date
         f17   = ''
         f18   = ''
         f19   = ''

@@ -9,14 +9,14 @@ $pathout = 'C:\userdata\route 62\_all suppliers\'
 $custsheet = 'october 2020'                          #Customer worksheet
 $outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers paid cash october 2020.csv'
 $startR = 5                                    #Start row
-$endR = 110                                    #End Row
+$endR = 169                                    #End Row
 $startCol = 1                                    #Start Col (don't change)
 $endCol = 11                                      #End Col (don't change)
 $filter = "CSH"
 
 $Outfile = $pathout + $csvfile
 
-Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -FilterScript {$_.P2 -ne $filter -and $_.P2 -ne 'CC' -and $_.P10 -eq 'cash' -and $_.P11 -ne 'done'} | Export-Csv -Path $Outfile -NoTypeInformation
+Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -FilterScript {$_.P2 -ne $filter -and $_.P2 -ne 'CC' -and $_.P10 -eq 'Cash' -and $_.P11 -ne 'Done'} | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
 Get-ChildItem -Path $pathout -Name $csvfile
