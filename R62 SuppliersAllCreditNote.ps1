@@ -1,13 +1,13 @@
 ﻿<#      Extract from spreadsheet the range for new supplier invoices or credit notes to be generated.
         Modify the $endR (endrow). 
 #>
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers october 2020.xlsm'          #Source workbook
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers november 2020.xlsm'          #Source workbook
 $csvfile = 'suppliers_1.csv'                                                                   #Temp file
 $pathout = 'C:\userdata\route 62\_all suppliers\'
-$custsheet = 'october 2020'                                                                        #Month worksheet - changes each month
-$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers october 2020_CN_1.csv'                  #Change each month
+$custsheet = 'november 2020'                                                                        #Month worksheet - changes each month
+$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers november 2020_CN_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 169                                              #End Row - changes each month depending on number of invoices
+$endR = 77                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 $filter = "CN"                                          #Filter - Credit notes
@@ -40,7 +40,7 @@ Remove-Item -Path $outfile
 #Temp file      
 $outfile = 'C:\userdata\route 62\_all suppliers\suppliercn.txt'
 #File to be imported into Pastel        
-$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers october 2020 CN.txt'     
+$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers november 2020 CN.txt'     
 
 #Remove last file imported to Pastel
 $checkfile = Test-Path $outfileF
