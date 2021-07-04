@@ -16,7 +16,7 @@ $Outfile = $pathout + $csvfile
 Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P2 -ne 'CSH' -and $_.P2 -ne 'CC' -and $_.P10 -ne 'CN' -and $_.P11 -ne 'done' } | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
-Get-ChildItem -Path $pathout -Name $csvfile
+#Get-ChildItem -Path $pathout -Name $csvfile
 $xl = New-Object -ComObject Excel.Application
 $xl.Visible = $false
 $xl.DisplayAlerts = $false
