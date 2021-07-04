@@ -3,20 +3,20 @@
         This can only be done by eyeball as spreadsheet has historical data.
 #>
 
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers november 2020.xlsm'
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021.xlsm'
 $csvfile = 'suppliers cash payment.csv'
 $pathout = 'C:\userdata\route 62\_all suppliers\'
-$custsheet = 'november 2020'                          #Customer worksheet
-$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers paid cash november 2020.csv'
+$custsheet = 'JUNE 2021'                          #Customer worksheet
+$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers paid cash JUNE 2021.csv'
 $startR = 5                                    #Start row
-$endR = 77                                   #End Row
+$endR = 99                                   #End Row
 $startCol = 1                                    #Start Col (don't change)
 $endCol = 11                                      #End Col (don't change)
 $filter = "CSH"
 
 $Outfile = $pathout + $csvfile
 
-Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -FilterScript {$_.P2 -ne $filter -and $_.P2 -ne 'CC' -and $_.P10 -eq 'Cash' -and $_.P11 -ne 'Done'} | Export-Csv -Path $Outfile -NoTypeInformation
+Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -FilterScript {$_.P2 -ne $filter -and $_.P2 -ne 'CC' -and $_.P10 -ne 'CN' -and $_.P10 -eq 'Cash' -and $_.P11 -ne 'Done'} | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
 Get-ChildItem -Path $pathout -Name $csvfile

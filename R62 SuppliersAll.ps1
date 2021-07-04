@@ -1,13 +1,13 @@
 ﻿<#      Extract from EXPENSES spreadsheet the range for new invoices to be generated.
         Modify the $StartR (startrow) and $endR (endrow). 
 #>
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers november 2020.xlsm'          #Source workbook
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers april 2021.xlsm'          #Source workbook
 $csvfile = 'suppliers_1.csv'                                                                                    #Temp file
 $pathout = 'C:\userdata\route 62\_all suppliers\'
-$custsheet = 'november 2020'                                                                        #Month worksheet - changes each month
-$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers november 2020_1.csv'                  #Change each month
+$custsheet = 'April 2021'                                                                        #Month worksheet - changes each month
+$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers april 2021_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 77                                              #End Row - changes each month depending on number of invoices
+$endR = 137                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 $filter = "CSH"                                          #Filter - Not CASH VOUCHERS - SEE Where-Object BELOW
@@ -40,7 +40,7 @@ Remove-Item -Path $outfile
 #Temp file      
 $outfile = 'C:\userdata\route 62\_all suppliers\supplierinv.txt'
 #File to be imported into Pastel        
-$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers november 2020.txt'     
+$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers april 2021.txt'     
 
 #Remove last file imported to Pastel
 $checkfile = Test-Path $outfileF
@@ -76,7 +76,9 @@ foreach ($aObj in $data) {
     Switch ($aObj.acc) {
         AIDOR { $expacc = '4350000'; $description = $aObj.descr }
         AUTOC { $expacc = '4150002'; $description = $aObj.descr }
+        CASB { $expacc = '4350000'; $description = $aObj.descr }
         CON001 { $expacc = '4600000'; $description = $aObj.descr }
+        CEO { $expacc = '4550000'; $description = $aObj.descr }
         GRIDH { $expacc = '4600000'; $description = $aObj.descr }
         METRA { $expacc = '4350000'; $description = $aObj.descr }
         MOOVR { $expacc = '4300000'; $description = $aObj.descr }
@@ -90,6 +92,7 @@ foreach ($aObj in $data) {
         PCOMP { $expacc = '4200000'; $description = $aObj.descr }
         RENOKI { $expacc = '3250000'; $description = $aObj.descr }
         TELK00 { $expacc = '4600000'; $description = $aObj.descr }
+        #SINGF { $expacc = '2000012'; $description = $aObj.descr }
         SAMRO { $expacc = '4550000'; $description = $aObj.descr }
         SAPPHI { $expacc = '4500000'; $description = $aObj.descr }
         STAN { $expacc = '4150002'; $description = $aObj.descr }
@@ -97,6 +100,7 @@ foreach ($aObj in $data) {
         SWDMUN { $expacc = '3650000'; $description = $aObj.descr }
         WAF00 { $expacc = '4600000'; $description = $aObj.descr }
         WALTON { $expacc = '4200000'; $description = $aObj.descr }
+    
         
     }
     

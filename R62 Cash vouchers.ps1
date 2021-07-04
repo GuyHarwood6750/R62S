@@ -2,11 +2,11 @@
         Modify the $StartR (startrow) and $endR (endrow).
                 This can only be done by eyeball as spreadsheet has historical data.
 #>
-$inspreadsheet = 'C:\userdata\route 62\_All Suppliers\Suppliers november 2020.xlsm'
-$outfile2 = 'C:\userdata\route 62\_All Suppliers\CSH november 2020_1.csv'
-$custsheet = 'november 2020'                                #Month worksheet
+$inspreadsheet = 'C:\userdata\route 62\_All Suppliers\Suppliers JUNE 2021.xlsm'
+$outfile2 = 'C:\userdata\route 62\_All Suppliers\CSH JUNE 2021_1.csv'
+$custsheet = 'JUNE 2021'                                #Month worksheet
 $startR = 5                                             #Start row - do not change
-$endR = 77                                              #End Row - change if necessary depending on number of purchases
+$endR = 204                                             #End Row - change if necessary depending on number of purchases
 $csvfile = 'SHEET1.csv'
 $pathout = 'C:\userdata\route 62\_All Suppliers\'
 $startCol = 1                                                                   #Start Col (don't change)
@@ -39,36 +39,39 @@ $checkfile = Test-Path $outfileF
 if ($checkfile) { Remove-Item $outfilef }                   
 
 #Import latest csv from Client spreadsheet
-$data = Import-Csv -path $outfile2 -header Expacc, type, supplier, date, ref, ref2, desc, amt, vat    
+$data = Import-Csv -path $outfile2 -header Expacc, type, supplier, date, ref, ref2, descr, amt, vat    
 
 foreach ($aObj in $data) {
     #Return Pastel accounting period based on the transaction date.
     $pastelper = PastelPeriods -transactiondate $aObj.date
     
     Switch ($aObj.Expacc) {
-        ADV { $expacc = '3050000' }         
-        AIRTIME { $expacc = '4600000' }         
-        CLEANING { $expacc = '3250000' }         
-        CWAGE { $expacc = '4401000' }         
-        COMPA { $expacc = '6250010' }         
-        COMPE { $expacc = '3300000' }         
-        COURIER { $expacc = '3400000' }
-        DONATION { $expacc = '3600000' }         
-        ELEC { $expacc = '3650000' }
-        EQUIP { $expacc = '2999000' }
-        FUEL { $expacc = '4150001' }
-        MVR { $expacc = '4150002' }
-        PACKAGING { $expacc = '2000010' }
-        POST { $expacc = '3400000' }
-        NPUR { $expacc = '2000012' }
-        PUR {$expacc = '2000010'}         
-        PVT { $expacc = '5201001' }         
-        RM { $expacc = '4350000' } 
-        STATIONERY { $expacc = '4200000' }
-        TEL { $expacc = '4600000' }         
-        UNIFORMS { $expacc = '4500000' }         
+        ADV { $expacc = '3050000'; $description = $aObj.descr }         
+        Advertising { $expacc = '3050000'; $description = $aObj.descr }         
+        AIRTIME { $expacc = '4600000'; $description = $aObj.descr }         
+        CLEANING { $expacc = '3250000'; $description = $aObj.descr }         
+        CWAGE { $expacc = '4401000'; $description = $aObj.descr }         
+        COMPA { $expacc = '6250010'; $description = $aObj.descr }         
+        COMPE { $expacc = '3300000'; $description = $aObj.descr }         
+        COURIER { $expacc = '3400000'; $description = $aObj.descr }
+        DONATION { $expacc = '3600000'; $description = $aObj.descr }         
+        ELEC { $expacc = '3650000'; $description = $aObj.descr }
+        EQUIP { $expacc = '2999000'; $description = $aObj.descr }
+        FUEL { $expacc = '4150001'; $description = $aObj.descr }
+        GENERATOR { $expacc = '3650000'; $description = $aObj.descr }
+        MVR { $expacc = '4150002'; $description = $aObj.descr }
+        OIL { $expacc = '4150001'; $description = $aObj.descr }
+        PACKAGING { $expacc = '2000010'; $description = $aObj.descr }
+        POST { $expacc = '3400000'; $description = $aObj.descr }
+        NPUR { $expacc = '2000012'; $description = $aObj.descr }
+        PUR { $expacc = '2000010'; $description = $aObj.descr }         
+        PVT { $expacc = '5201001'; $description = $aObj.descr }         
+        RM { $expacc = '4350000'; $description = $aObj.descr } 
+        STATIONERY { $expacc = '4200000'; $description = $aObj.descr }
+        TEL { $expacc = '4600000'; $description = $aObj.descr }         
+        UNIFORMS { $expacc = '4500000'; $description = $aObj.descr }         
         
-        Default {$expacc = '9983000'}       
+        Default { $expacc = '9983000'; $description = $aObj.descr }       
     }
 
     Switch ($aObj.vat) {
@@ -83,7 +86,7 @@ foreach ($aObj in $data) {
         GL      = 'G'
         contra  = $expacc                       #Expense account to be debited (DR)
         ref     = $aObj.ref
-        comment = $aObj.supplier
+        comment = $description
         amount  = $aObj.amt
         fil1    = $VATind
         fil2    = '0'
