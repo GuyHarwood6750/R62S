@@ -18,6 +18,8 @@ $outfile2 = 'C:\userdata\route 62\_all Customers\municipality.csv'
 Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly| Where-Object -Filterscript {$_.P8 -ne 'done' } | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
+ExcelFormatDate -file $Outfile -sheet 'sheet1' -column 'B:B'
+<#
         $xl = New-Object -ComObject Excel.Application
         $xl.Visible = $false
         $xl.DisplayAlerts = $false
@@ -30,7 +32,7 @@ Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -S
         $wb.save()
         $xl.Workbooks.Close()
         $xl.Quit()
-
+#>
 Get-Content -Path $outfile | Select-Object -skip 2 | Set-Content -path $outfile2
 Remove-Item -Path $outfile
 
@@ -90,21 +92,19 @@ if ($aObj.invnum -ne $previnvnum) {
     }
     $objlist = New-Object -TypeName psobject -Property $header 
     $objlist | Select-Object * | Export-Csv -path $outfile3 -NoTypeInformation -Append
-}
-    [decimal]$amount = $aObj.amt  
-    [decimal]$vat = $amount * 15 / 115
-    [decimal]$amtexvat = $aObj.amt - $vat
-    $vatexamt = [math]::Round($amtexvat, 2)
-    $vatpercent = 15
+}   
+    [decimal]$amount = $aObj.amt
+
+    $c = VATCalc -amountincvat $amount
 
         $details1 = [ordered] @{
         Col1   = 'Detail'
         Col2   = '0'
         Col3   = '1'
-        Col4   = $vatexamt
-        Col5   = $aObj.amt
+        Col4   = $c.vatexamt
+        Col5   = $amount
         Col6   = ''
-        Col7   = $vatpercent
+        Col7   = $c.vatpercent
         Col8   = '0'
         Col9   = '0'
         Col10   = '1010100'

@@ -1,32 +1,22 @@
 ﻿<#      Extract from EXPENSES spreadsheet the range for new invoices to be generated.
         Modify the $StartR (startrow) and $endR (endrow). 
 #>
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021.xlsm'          #Source workbook
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2021.xlsm'          #Source workbook
 $csvfile = 'suppliers_1.csv'                                                                                    #Temp file
 $pathout = 'C:\userdata\route 62\_all suppliers\'
-$custsheet = 'JUNE 2021'                                                                        #Month worksheet - changes each month
-$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021_1.csv'                  #Change each month
+$custsheet = 'JULY 2021'                                                                        #Month worksheet - changes each month
+$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2021_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 204                                              #End Row - changes each month depending on number of invoices
+$endR = 23                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 #$filter = "CSH"                                          #Filter - Not CASH VOUCHERS - SEE Where-Object BELOW
 $Outfile = $pathout + $csvfile
 
-Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P2 -ne 'CSH' -and $_.P2 -ne 'CC' -and $_.P10 -ne 'CN' -and $_.P11 -ne 'done' } | Export-Csv -Path $Outfile -NoTypeInformation
+Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P2 -eq 'MOOVG' -and $_.P2 -ne 'CC' -and $_.P10 -ne 'CN' -and $_.P11 -ne 'done' } | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
-#Get-ChildItem -Path $pathout -Name $csvfile
-$xl = New-Object -ComObject Excel.Application
-$xl.Visible = $false
-$xl.DisplayAlerts = $false
-$wb = $xl.workbooks.Open($Outfile)
-$xl.Sheets.Item('suppliers_1').Activate()
-$range = $xl.Range("d:d").Entirecolumn
-$range.NumberFormat = 'dd/mm/yyyy'
-$wb.save()
-$xl.Workbooks.Close()
-$xl.Quit()
+ExcelFormatDate -file $Outfile -sheet 'suppliers_1' -column 'D:D'
 
 Get-Content -Path $outfile | Select-Object -skip 1 | Set-Content -path $outfile2
 Remove-Item -Path $outfile
@@ -35,11 +25,11 @@ Remove-Item -Path $outfile
     Output to text file to be imported as a Pastel Invoice batch.
 #>
 #Input from Supplier spreadsheet
-#$csvsupplier = 'C:\userdata\route 62\_all suppliers\suppliers june 2020.csv'
+#$csvsupplier = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2020.csv'
 #Temp file      
 $outfile = 'C:\userdata\route 62\_all suppliers\supplierinv.txt'
 #File to be imported into Pastel        
-$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021.txt'     
+$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2021.txt'     
 
 #Remove last file imported to Pastel
 $checkfile = Test-Path $outfileF
@@ -58,10 +48,9 @@ foreach ($aObj in $data) {
     switch ($aObj.vat) { 
         Y {
             [decimal]$amount = $aObj.amt
-            [decimal]$vat = $amount * 15 / 115
-            [decimal]$amtexvat = $aObj.amt - $vat
-            $vatexamt = [math]::Round($amtexvat, 2)
-            $vatpercent = 15 
+            $c = VATCalc -amountincvat $amount
+            $vatexamt = $c.vatexamt
+            $vatpercent = $c.vatpercent
             $expacc = '2000010'
             $description = $aObj.descr
         }
@@ -94,8 +83,9 @@ foreach ($aObj in $data) {
         MIOSA { $expacc = '4550000'; $description = $aObj.descr }
         MSCHER { $expacc = '3000000'; $description = $aObj.descr }
         PCOMP { $expacc = '4200000'; $description = $aObj.descr }
-        RENOKI { $expacc = '3250000'; $description = $aObj.descr }
         SAMRO { $expacc = '4550000'; $description = $aObj.descr }
+        RFE { $expacc = '4350000'; $description = $aObj.descr }
+        RENOKI { $expacc = '3250000'; $description = $aObj.descr }
         SAPPHI { $expacc = '4500000'; $description = $aObj.descr }
         STAN { $expacc = '4150002'; $description = $aObj.descr }
         STCOMP { $expacc = '3300000'; $description = $aObj.descr }
@@ -150,7 +140,14 @@ foreach ($aObj in $data) {
                     Usage {$expacc = '4600000'; $description = $aObj.descr}         #Multipile line invoice
                     Interest {$expacc = '3900001'; $description = $aObj.descr}      #Multipile line invoice      
                             }
-            } }
+            } 
+        SWDMUN { Switch ($aObj.descr) {
+                    Water {$expacc = '3650000'; $description = $aObj.descr}   #Multipile line invoice
+                    Refuse {$expacc = '3650000'; $description = $aObj.descr}         #Multipile line invoice
+                    Diverse {$expacc = '3650000'; $description = $aObj.descr}      #Multipile line invoice      
+                            }
+            } 
+        }
     $detailProperties = [ordered] @{
         hd   = 'Detail'
         f1   = $vatexamt

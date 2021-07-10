@@ -10,7 +10,7 @@ $custsheet = 'JUNE mixed vat'                          #Customer worksheet
 $csvfile = 'suppliers mixed vat temp.csv'
 $pathout = 'C:\userdata\route 62\_all suppliers\'
 $startR = 5                                    #Start row
-$endR = 7                                    #End Row
+$endR = 10                                    #End Row
 $startCol = 1                                    #Start Col (don't change)
 $endCol = 15                                      #End Col (don't change)
 
@@ -19,7 +19,9 @@ $Outfile = $pathout + $csvfile
 Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -FilterScript {$_.P15 -ne 'done'} | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
-Get-ChildItem -Path $pathout -Name $csvfile
+ExcelFormatDate -file $Outfile -sheet 'suppliers mixed vat temp' -column 'D:D'
+<#
+#Get-ChildItem -Path $pathout -Name $csvfile
 $xl = New-Object -ComObject Excel.Application
 $xl.Visible = $false
 $xl.DisplayAlerts = $false
@@ -32,7 +34,7 @@ $range.NumberFormat = 'dd/mm/yyyy'
 $wb.save()
 $xl.Workbooks.Close()
 $xl.Quit()
-
+#>
 Get-Content -Path $outfile | Select-Object -skip 1 | Set-Content -path $outfile2
 Remove-Item -Path $outfile
 

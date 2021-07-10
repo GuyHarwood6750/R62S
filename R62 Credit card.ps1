@@ -18,6 +18,8 @@ $Outfile = $pathout + $csvfile
 
 Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly| Where-Object -Filterscript { $_.P1 -eq $filter -and $_.P11 -ne 'done'} | Export-Csv -Path $Outfile -NoTypeInformation
 
+ExcelFormatDate -file $Outfile -sheet 'SHEET1' -column 'E:E'
+<#
 Get-ChildItem -Path $pathout -Name $csvfile
 $xl = New-Object -ComObject Excel.Application
 $xl.Visible = $false
@@ -30,7 +32,7 @@ $range.NumberFormat = 'dd/mm/yyyy'
 $wb.save()
 $xl.Workbooks.Close()
 $xl.Quit()
-
+#>
 Get-Content -Path $outfile | Select-Object -skip 1 | Set-Content -path $outfile2
 Remove-Item -Path $outfile
 

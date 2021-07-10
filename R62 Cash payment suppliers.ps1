@@ -3,13 +3,13 @@
         This can only be done by eyeball as spreadsheet has historical data.
 #>
 
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021.xlsm'
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2021.xlsm'
 $csvfile = 'suppliers cash payment.csv'
 $pathout = 'C:\userdata\route 62\_all suppliers\'
-$custsheet = 'JUNE 2021'                          #Customer worksheet
-$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers paid cash JUNE 2021.csv'
+$custsheet = 'JULY 2021'                          #Customer worksheet
+$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers paid cash JULY 2021.csv'
 $startR = 5                                    #Start row
-$endR = 99                                   #End Row
+$endR = 21                                   #End Row
 $startCol = 1                                    #Start Col (don't change)
 $endCol = 11                                      #End Col (don't change)
 $filter = "CSH"
@@ -19,19 +19,7 @@ $Outfile = $pathout + $csvfile
 Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -FilterScript {$_.P2 -ne $filter -and $_.P2 -ne 'CC' -and $_.P10 -ne 'CN' -and $_.P10 -eq 'Cash' -and $_.P11 -ne 'Done'} | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
-Get-ChildItem -Path $pathout -Name $csvfile
-$xl = New-Object -ComObject Excel.Application
-$xl.Visible = $false
-$xl.DisplayAlerts = $false
-$wb = $xl.workbooks.Open($Outfile)
-$xl.Sheets.Item('suppliers cash payment').Activate()
-  
-$range = $xl.Range("d:d").Entirecolumn
-$range.NumberFormat = 'dd/mm/yyyy'
-
-$wb.save()
-$xl.Workbooks.Close()
-$xl.Quit()
+ExcelFormatDate -file $Outfile -sheet 'suppliers cash payment' -column 'D:D'
 
 Get-Content -Path $outfile | Select-Object -skip 1 | Set-Content -path $outfile2
 Remove-Item -Path $outfile

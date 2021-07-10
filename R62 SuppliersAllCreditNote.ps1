@@ -7,7 +7,7 @@ $pathout = 'C:\userdata\route 62\_all suppliers\'
 $custsheet = 'JUNE 2021'                                                                        #Month worksheet - changes each month
 $outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021_CN_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 99                                              #End Row - changes each month depending on number of invoices
+$endR = 212                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 $filter = "CN"                                          #Filter - Credit notes
@@ -16,7 +16,9 @@ $Outfile = $pathout + $csvfile
 Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P10 -eq $filter -and $_.P11 -ne 'Done'} | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
-Get-ChildItem -Path $pathout -Name $csvfile
+ExcelFormatDate -file $Outfile -sheet 'suppliers_1' -column 'D:D'
+<#
+<Get-ChildItem -Path $pathout -Name $csvfile
 $xl = New-Object -ComObject Excel.Application
 $xl.Visible = $false
 $xl.DisplayAlerts = $false
@@ -28,7 +30,7 @@ $range.NumberFormat = 'dd/mm/yyyy'
 $wb.save()
 $xl.Workbooks.Close()
 $xl.Quit()
-
+#>
 Get-Content -Path $outfile | Select-Object -skip 1 | Set-Content -path $outfile2
 Remove-Item -Path $outfile
 
@@ -57,10 +59,9 @@ foreach ($aObj in $data) {
     switch ($aObj.vat) { 
         Y {
             [decimal]$amount = $aObj.amt
-            [decimal]$vat = $amount * 15 / 115
-            [decimal]$amtexvat = $aObj.amt - $vat
-            $vatexamt = [math]::Round($amtexvat, 2)
-            $vatpercent = 15 
+            $c = VATCalc -amountincvat $amount
+            $vatexamt = $c.vatexamt
+            $vatpercent = $c.vatpercent
             $expacc = '2000010'
             $description = $aObj.descr
         }

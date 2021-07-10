@@ -2,11 +2,11 @@
         Modify the $StartR (startrow) and $endR (endrow).
                 This can only be done by eyeball as spreadsheet has historical data.
 #>
-$inspreadsheet = 'C:\userdata\route 62\_All Suppliers\Suppliers JUNE 2021.xlsm'
-$outfile2 = 'C:\userdata\route 62\_All Suppliers\CSH JUNE 2021_1.csv'
-$custsheet = 'JUNE 2021'                                #Month worksheet
+$inspreadsheet = 'C:\userdata\route 62\_All Suppliers\Suppliers JULY 2021.xlsm'
+$outfile2 = 'C:\userdata\route 62\_All Suppliers\CSH JULY 2021_1.csv'
+$custsheet = 'JULY 2021'                                #Month worksheet
 $startR = 5                                             #Start row - do not change
-$endR = 204                                             #End Row - change if necessary depending on number of purchases
+$endR = 21                                             #End Row - change if necessary depending on number of purchases
 $csvfile = 'SHEET1.csv'
 $pathout = 'C:\userdata\route 62\_All Suppliers\'
 $startCol = 1                                                                   #Start Col (don't change)
@@ -18,18 +18,7 @@ $Outfile = $pathout + $csvfile
 
 Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly| Where-Object -Filterscript { $_.P2 -eq $filter -and $_.P11 -ne 'done'} | Export-Csv -Path $Outfile -NoTypeInformation
 
-Get-ChildItem -Path $pathout -Name $csvfile
-$xl = New-Object -ComObject Excel.Application
-$xl.Visible = $false
-$xl.DisplayAlerts = $false
-$wb = $xl.workbooks.Open($Outfile)
-$xl.Sheets.Item('sheet1').Activate()
-$range = $xl.Range("d:d").Entirecolumn
-$range.NumberFormat = 'dd/mm/yyyy'
-
-$wb.save()
-$xl.Workbooks.Close()
-$xl.Quit()
+ExcelFormatDate -file $Outfile -sheet 'SHEET1' -column 'D:D'
 
 Get-Content -Path $outfile | Select-Object -skip 1 | Set-Content -path $outfile2
 Remove-Item -Path $outfile
@@ -66,6 +55,7 @@ foreach ($aObj in $data) {
         NPUR { $expacc = '2000012'; $description = $aObj.descr }
         PUR { $expacc = '2000010'; $description = $aObj.descr }         
         PVT { $expacc = '5201001'; $description = $aObj.descr }         
+        RFE { $expacc = '4350000'; $description = $aObj.descr } 
         RM { $expacc = '4350000'; $description = $aObj.descr } 
         STATIONERY { $expacc = '4200000'; $description = $aObj.descr }
         TEL { $expacc = '4600000'; $description = $aObj.descr }         
