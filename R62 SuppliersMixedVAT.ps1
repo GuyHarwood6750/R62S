@@ -3,14 +3,14 @@
     
     **************  Used for MIXED VAT invoices  ******************
     #>
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021.xlsm'
-$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers mixed vat inv JUNE 2021_1.csv'
-$outfileF = 'C:\userdata\route 62\_All Suppliers\Suppliers JUNE mixed vat 2021_1.txt'     
-$custsheet = 'JUNE mixed vat'                          #Customer worksheet
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2021.xlsm'
+$outfile2 = 'C:\userdata\Route 62\_aLL suppliers\suppliers mixed vat inv JULY 2021_1.csv'
+$outfileF = 'C:\userdata\route 62\_All Suppliers\Suppliers JULY mixed vat 2021_1.txt'     
+$custsheet = 'JULY mixed vat'                          #Customer worksheet
 $csvfile = 'suppliers mixed vat temp.csv'
 $pathout = 'C:\userdata\route 62\_all suppliers\'
 $startR = 5                                    #Start row
-$endR = 10                                    #End Row
+$endR = 8                                    #End Row
 $startCol = 1                                    #Start Col (don't change)
 $endCol = 15                                      #End Col (don't change)
 
@@ -39,7 +39,7 @@ Get-Content -Path $outfile | Select-Object -skip 1 | Set-Content -path $outfile2
 Remove-Item -Path $outfile
 
 #Input from Supplier spreadsheet
-#$csvsupplier = 'C:\userdata\route 62\_All Suppliers\Suppliers JUNE mixed vat 2020.csv'
+#$csvsupplier = 'C:\userdata\route 62\_All Suppliers\Suppliers JULY mixed vat 2020.csv'
 #Temp file      
 #$outfile = 'C:\userdata\route 62\_All Suppliers\supplierinv.txt'
 #File to be imported into Pastel        

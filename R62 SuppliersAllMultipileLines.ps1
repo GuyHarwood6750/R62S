@@ -7,13 +7,13 @@ $pathout = 'C:\userdata\route 62\_all suppliers\'
 $custsheet = 'JULY 2021'                                                                        #Month worksheet - changes each month
 $outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2021_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 23                                              #End Row - changes each month depending on number of invoices
+$endR = 86                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 #$filter = "CSH"                                          #Filter - Not CASH VOUCHERS - SEE Where-Object BELOW
 $Outfile = $pathout + $csvfile
 
-Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P2 -eq 'MOOVG' -and $_.P2 -ne 'CC' -and $_.P10 -ne 'CN' -and $_.P11 -ne 'done' } | Export-Csv -Path $Outfile -NoTypeInformation
+Import-Excel -Path $inspreadsheet -WorksheetName $custsheet -StartRow $startR -StartColumn $startCol -EndRow $endR -EndColumn $endCol -NoHeader -DataOnly | Where-Object -Filterscript { $_.P2 -ne 'CSH' -and $_.P2 -ne 'CC' -and $_.P10 -ne 'CN' -and $_.P11 -ne 'done' } | Export-Csv -Path $Outfile -NoTypeInformation
 
 # Format date column correctly
 ExcelFormatDate -file $Outfile -sheet 'suppliers_1' -column 'D:D'

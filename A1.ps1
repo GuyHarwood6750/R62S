@@ -27,6 +27,23 @@ Switch ($suppliername) {
          }
       }                
    }  
+   FNB {
+      $destFile = $dropboxBase + "FNB\"
+      if (-Not (Test-Path -Path $destFile)) {
+         Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
+      }
+      else {
+         $bs = Get-ChildItem -Path $sourceALLFiles -file
+         foreach ($bsf in $bs) {
+            if ($bsf.name -like 'FNB*.pdf') {
+               $file = $bsf.Name
+               Move-Item -Path $sourceALLFiles\$file -Destination $destFile -Force   
+            }
+            else {
+            }
+         }
+      }                
+   }  
    RENTOKIL {
       $destFile = $dropboxBase + $year + "Rentokil\"
       if (-Not (Test-Path -Path $destFile)) {
@@ -44,8 +61,25 @@ Switch ($suppliername) {
          }
       }                
    }  
+   HENTIES {
+      $destFile = $dropboxBase + $year + "Henties\"
+      if (-Not (Test-Path -Path $destFile)) {
+         Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
+      }
+      else {
+         $bs = Get-ChildItem -Path $sourceALLFiles -file
+         foreach ($bsf in $bs) {
+            if ($bsf.name -like 'Henties*.pdf') {
+               $file = $bsf.Name
+               Move-Item -Path $sourceALLFiles\$file -Destination $destFile -Force   
+            }
+            else {
+            }
+         }
+      }                
+   }  
    PACKTOWN {
-      $destFile = $dropboxBase + $year + "Pactown\"
+      $destFile = $dropboxBase + $year + "Packtown\"
       if (-Not (Test-Path -Path $destFile)) {
          Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
       }
@@ -197,6 +231,23 @@ Switch ($suppliername) {
             }
          }                
       }    
+      "Stay Cool" {
+         $destFile = $dropboxBase + $year + "Stay Cool\"
+         if (-Not (Test-Path -Path $destFile)) {
+            Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
+         }
+         else {
+            $bs = Get-ChildItem -Path $sourceALLFiles -file
+            foreach ($bsf in $bs) {
+               if ($bsf.name -like 'Stay Cool*.pdf') {
+                  $file = $bsf.Name
+                  Move-Item -Path $sourceALLFiles\$file -Destination $destFile -Force   
+               }
+               else {
+               }
+            }
+         }                
+      }    
       Geiiansa {
          $destFile = $dropboxBase + $year + "Geiiansa\"
          if (-Not (Test-Path -Path $destFile)) {
@@ -248,6 +299,40 @@ Switch ($suppliername) {
             }
          }                
       }    
+      SWELLENFRUIT {
+         $destFile = $dropboxBase + $year + "Swellen fruit\"
+         if (-Not (Test-Path -Path $destFile)) {
+            Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
+         }
+         else {
+            $bs = Get-ChildItem -Path $sourceALLFiles -file
+            foreach ($bsf in $bs) {
+               if ($bsf.name -like 'Swellenfruit*.pdf') {
+                  $file = $bsf.Name
+                  Move-Item -Path $sourceALLFiles\$file -Destination $destFile -Force   
+               }
+               else {
+               }
+            }
+         }                
+      }    
+      Twisp {
+         $destFile = $dropboxBase + $year + "Twisp\"
+         if (-Not (Test-Path -Path $destFile)) {
+            Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
+         }
+         else {
+            $bs = Get-ChildItem -Path $sourceALLFiles -file
+            foreach ($bsf in $bs) {
+               if ($bsf.name -like 'Twisp*.pdf') {
+                  $file = $bsf.Name
+                  Move-Item -Path $sourceALLFiles\$file -Destination $destFile -Force   
+               }
+               else {
+               }
+            }
+         }                
+      }    
       MOOV {
          $destFile = $dropboxBase + $year + "MOOV\"
          if (-Not (Test-Path -Path $destFile)) {
@@ -265,10 +350,62 @@ Switch ($suppliername) {
             }
          }                
       }    
+      MARI {
+         $destFile = $dropboxBase + $year + "Mari Scherman\"
+         if (-Not (Test-Path -Path $destFile)) {
+            Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
+         }
+         else {
+            $bs = Get-ChildItem -Path $sourceALLFiles -file
+            foreach ($bsf in $bs) {
+               if ($bsf.name -like 'Mari*.pdf') {
+                  $file = $bsf.Name
+                  Move-Item -Path $sourceALLFiles\$file -Destination $destFile -Force   
+               }
+               else {
+               }
+            }
+         }                
+      }    
+      HARWOOD {
+         $destFile = $dropboxBase + $year + "Harwood\"
+         if (-Not (Test-Path -Path $destFile)) {
+            Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
+         }
+         else {
+            $bs = Get-ChildItem -Path $sourceALLFiles -file
+            foreach ($bsf in $bs) {
+               if ($bsf.name -like 'Harwood*.pdf') {
+                  $file = $bsf.Name
+                  Move-Item -Path $sourceALLFiles\$file -Destination $destFile -Force   
+               }
+               else {
+               }
+            }
+         }                
+      }    
+      CLOVER {
+         $destFile = $dropboxBase + $year + "Clover\"
+         if (-Not (Test-Path -Path $destFile)) {
+            Write-Error -Message "Folder does not exist '$destFile'. Error was: $_" -ErrorAction Stop
+         }
+         else {
+            $bs = Get-ChildItem -Path $sourceALLFiles -file
+            foreach ($bsf in $bs) {
+               if ($bsf.name -like 'Clover*.pdf') {
+                  $file = $bsf.Name
+                  Move-Item -Path $sourceALLFiles\$file -Destination $destFile -Force   
+               }
+               else {
+               }
+            }
+         }                
+      }    
 }       
 }
 #A1 -suppliername 'RENTOKIL' -month '05July'
 #A1 -suppliername 'packtown' -month '05July'
+A1 -suppliername 'CLOVER' -month '05July'
 #A1 -suppliername 'mibco' -month '05July'
 #A1 -suppliername 'cape karoo' -month '05July'
 #A1 -suppliername 'blue' -month '05July'
@@ -277,8 +414,15 @@ Switch ($suppliername) {
 #A1 -suppliername 'telkom' -month '05July'
 #A1 -suppliername 'little oaks' -month '05July'
 #A1 -suppliername 'huge Connect' -month '05July'
+#A1 -suppliername 'Henties' -month '05July'
 #A1 -suppliername '1-Grid' -month '05July'
 #A1 -suppliername 'Geiiansa' -month '05July'
 #A1 -suppliername 'SWD' -month '05July'
 #A1 -suppliername 'Sapphire' -month '05July'
+#A1 -suppliername 'Stay Cool' -month '05July'
+#A1 -suppliername 'SWELLENFRUIT' -month '05July'
+#A1 -suppliername 'Twisp' -month '05July'
 #A1 -suppliername 'MOOV' -month '05July'
+#A1 -suppliername 'MARI' -month '05July'
+#A1 -suppliername 'FNB' -month '05July'
+A1 -suppliername 'Harwood' -month '05July'

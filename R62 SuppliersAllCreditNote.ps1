@@ -1,13 +1,13 @@
 ﻿<#      Extract from spreadsheet the range for new supplier invoices or credit notes to be generated.
         Modify the $endR (endrow). 
 #>
-$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021.xlsm'          #Source workbook
+$inspreadsheet = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2021.xlsm'          #Source workbook
 $csvfile = 'suppliers_1.csv'                                                                   #Temp file
 $pathout = 'C:\userdata\route 62\_all suppliers\'
-$custsheet = 'JUNE 2021'                                                                        #Month worksheet - changes each month
-$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2021_CN_1.csv'                  #Change each month
+$custsheet = 'JULY 2021'                                                                        #Month worksheet - changes each month
+$outfile2 = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2021_CN_1.csv'                  #Change each month
 $startR = 5                                             #Start row - does not change       
-$endR = 212                                              #End Row - changes each month depending on number of invoices
+$endR = 102                                              #End Row - changes each month depending on number of invoices
 $startCol = 1                                           #Start Col (don't change)
 $endCol = 11                                             #End Col (don't change)
 $filter = "CN"                                          #Filter - Credit notes
@@ -38,11 +38,11 @@ Remove-Item -Path $outfile
     Output to text file to be imported as a Pastel Invoice or Credit note batch.
 #>
 #Input from Supplier spreadsheet
-#$csvsupplier = 'C:\userdata\route 62\_all suppliers\suppliers june 2020.csv'
+#$csvsupplier = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2020.csv'
 #Temp file      
 $outfile = 'C:\userdata\route 62\_all suppliers\suppliercn.txt'
 #File to be imported into Pastel        
-$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers JUNE 2020 CN.txt'     
+$outfileF = 'C:\userdata\route 62\_all suppliers\suppliers JULY 2020 CN.txt'     
 
 #Remove last file imported to Pastel
 $checkfile = Test-Path $outfileF

@@ -1,4 +1,5 @@
 ﻿<#  Get list of petrol invoices from Petrol books spreadsheet
+    +++++++++++++ MULTILINE invoices ++++++++++++
     Output to text file to be imported as a Pastel Invoice batch.
 
 #>
