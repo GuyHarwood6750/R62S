@@ -48,5 +48,5 @@ Switch ($reportname) {
    }   
 }       
 }
-#A1A -reportname 'EasyPay'
+A1A -reportname 'EasyPay'
 #A1A -reportname 'EOS'
